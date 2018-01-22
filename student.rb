@@ -3,6 +3,7 @@ require 'dm-migrations'
 require 'dm-postgres-adapter'
 
 DataMapper::Logger.new($stdout, :debug)
+DataMapper.setup(:default, "postgres://localhost/database_play")
 
 class Student
 
@@ -12,3 +13,5 @@ class Student
   property :name, String
 
 end
+
+DataMapper.finalize

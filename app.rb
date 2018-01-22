@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require './app/models/bookmark'
 
 class BookmarkManager < Sinatra::Base
 

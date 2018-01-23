@@ -1,10 +1,10 @@
 <h1> Bookmarks </h1>
 
 <ul id='links'>
-  <% @bookmarks.each do |bm| %>
+  <% @bookmarks.each do |bookmark| %>
     <li>
-      Title: <%= bm.title %>
-      URL:   <%= bm.url   %>
+      Title: <%= bookmark.title %>
+      URL:   <%= bookmark.url   %>
     </li>
   <% end %>
 </ul>

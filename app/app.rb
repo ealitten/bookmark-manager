@@ -1,6 +1,8 @@
 require 'sinatra/base'
 require './app/models/bookmark'
 
+ENV['RACK_ENV'] ||= 'development'
+
 class BookmarkManager < Sinatra::Base
 
   # start the server if ruby file executed directly

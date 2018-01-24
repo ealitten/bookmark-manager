@@ -29,8 +29,8 @@ class BookmarkManager < Sinatra::Base
     redirect '/links'
   end
 
-  get '/tags/bubbles' do
-    @bookmarks = Bookmark.all(Bookmark.tags.name => 'bubbles')
+  get '/tags/:name' do
+    @bookmarks = Bookmark.all(Bookmark.tags.name => params[:name])
     erb :'links/index'
   end
 

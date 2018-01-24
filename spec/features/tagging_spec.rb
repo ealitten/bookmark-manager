@@ -5,7 +5,7 @@ feature 'Add tags to bookmarks' do
     fill_in 'url', with: 'www.google.com'
     fill_in 'tags', with: 'test-tag'
     click_button 'Submit'
-    expect(current_path).to eq("/links")
-    expect(page).to have_content("test-tag")
+    bookmark = Bookmark.first
+    expect(bookmark.tags.map(&:name)).to include('test-tag')
   end
 end

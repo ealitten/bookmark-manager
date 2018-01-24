@@ -16,4 +16,5 @@ group :test do
   gem 'rspec'
   gem 'capybara'
   gem 'dm-rspec'
+  gem 'pry'
 end

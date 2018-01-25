@@ -7,12 +7,13 @@ require 'rake'
 class BookmarkManager < Sinatra::Base
   enable :sessions
   set :session_secret,'3ba483fe8228a969accee0938e8c440abcf7891a06afcaa7f85b30a3bf7495e2c706826a9a97c920c9f5f6ec7d4481af7f8364c4d0006b3e1e571a7cf069d1e2'
+  
   # start the server if ruby file executed directly
   run! if app_file == $0
 
   helpers do
     def current_user
-      User.get(session[:user_id])
+      @current_user ||= User.get(session[:user_id])
     end
   end
 
@@ -22,7 +23,6 @@ class BookmarkManager < Sinatra::Base
 
   get '/links' do
     @bookmarks = Bookmark.all
-    @current_user = current_user
     erb :'links/index'
   end
 

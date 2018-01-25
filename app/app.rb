@@ -15,6 +15,7 @@ class BookmarkManager < Sinatra::Base
 
   get '/links' do
     @bookmarks = Bookmark.all
+    @current_user = User.first
     erb :'links/index'
   end
 
@@ -33,6 +34,15 @@ class BookmarkManager < Sinatra::Base
   get '/tags/:name' do
     @bookmarks = Bookmark.all(Bookmark.tags.name => params[:name])
     erb :'links/index'
+  end
+
+  get '/registration' do
+    erb :registration
+  end
+
+  post '/registration' do
+    User.create(username: params[:username], password: params[:password])
+    redirect '/links'
   end
 
 end

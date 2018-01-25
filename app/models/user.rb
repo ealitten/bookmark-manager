@@ -1,4 +1,5 @@
 require 'bcrypt'
+require 'dm-validations'
 
 class User
 
@@ -8,6 +9,9 @@ class User
   property :id, Serial
   property :username, String
   property :encrypted_password, Text
+  attr_accessor :password_confirmation
+
+  validates_confirmation_of :password
   
   def password
     @password ||= Password.new(encrypted_password)

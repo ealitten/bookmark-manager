@@ -14,15 +14,23 @@ def non_matching_passwords
   click_button 'sign-up'
 end
 
+def no_email
+  visit '/users/new'
+  click_button 'sign-up'
+end
+
 feature 'First-time user can register' do
   scenario 'User enters registration details and recieves confirmation' do
     expect{ fill_in_form }.to change { User.count }.by 1
     expect(current_path).to eq '/links'
     expect(page).to have_content 'Welcome email123@example.com'
   end
-  scenario 'User enters non-matching passwords' do
+  scenario 'User cannot sign up when passwords do not match' do
     expect{ non_matching_passwords }.not_to change { User.count }
     expect(current_path).to eq '/users'
     expect(page).to have_content 'Password and confirmation password do not match'
+  end
+  scenario "User cannot sign up without entering email address" do
+    expect { no_email }.not_to change(User, :count)
   end
 end

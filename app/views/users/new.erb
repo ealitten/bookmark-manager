@@ -1,6 +1,10 @@
 <h1>Bookmark Manager</h1>
 <h2>Add a new user</h2>
 
+<% if flash[:notice] %>
+  <div id='notice'><%= flash[:notice] %></div>
+<% end %>
+
 <p>Please enter your details</p>
 <form action="/users" method="post">
   <div>

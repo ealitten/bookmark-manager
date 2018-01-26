@@ -1,13 +1,19 @@
 ENV['RACK_ENV'] ||= 'development'
 
 require 'sinatra/base'
-require_relative 'datamapper_setup'
+require 'sinatra/flash'
 require 'rake'
+require 'securerandom'
+
+require_relative 'datamapper_setup'
+
 
 class BookmarkManager < Sinatra::Base
+
   enable :sessions
-  set :session_secret,'3ba483fe8228a969accee0938e8c440abcf7891a06afcaa7f85b30a3bf7495e2c706826a9a97c920c9f5f6ec7d4481af7f8364c4d0006b3e1e571a7cf069d1e2'
-  
+  set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
+  register Sinatra::Flash
+
   # start the server if ruby file executed directly
   run! if app_file == $0
 
@@ -48,12 +54,16 @@ class BookmarkManager < Sinatra::Base
   end
 
   post '/users' do
-    user = User.new(username: params[:username])
-    user.password, user.password_confirmation = params[:password], params[:password_confirmation]
-    redirect '/users/new' unless user.valid?
-    user.save!
-    session[:user_id] = user.id
-    redirect '/links'
+    user = User.new(username: params[:username],
+                    password: params[:password], 
+                    password_confirmation: params[:password_confirmation])
+    if user.save
+      session[:user_id] = user.id
+      redirect '/links'
+    else
+      flash.now[:notice] = "Password and confirmation password do not match"
+      erb :'users/new'
+    end
   end
 
 end

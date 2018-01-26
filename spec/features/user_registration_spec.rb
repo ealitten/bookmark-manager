@@ -22,7 +22,7 @@ feature 'First-time user can register' do
   end
   scenario 'User enters non-matching passwords' do
     expect{ non_matching_passwords }.not_to change { User.count }
-    expect(current_path).to eq '/users/new'
+    expect(current_path).to eq '/users'
     expect(page).to have_content 'Password and confirmation password do not match'
   end
 end

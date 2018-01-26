@@ -14,14 +14,15 @@ def non_matching_passwords
   click_button 'sign-up'
 end
 
-feature 'first time user can register' do
-  scenario 'user enters registration details and recieves confirmation' do
+feature 'First-time user can register' do
+  scenario 'User enters registration details and recieves confirmation' do
     expect{ fill_in_form }.to change { User.count }.by 1
     expect(current_path).to eq '/links'
     expect(page).to have_content 'Welcome email123@example.com'
   end
-  scenario 'user enters different passwords' do
+  scenario 'User enters non-matching passwords' do
     expect{ non_matching_passwords }.not_to change { User.count }
     expect(current_path).to eq '/users/new'
+    expect(page).to have_content 'Password and confirmation password do not match'
   end
 end

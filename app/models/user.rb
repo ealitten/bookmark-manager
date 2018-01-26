@@ -12,6 +12,7 @@ class User
   attr_accessor :password_confirmation
 
   validates_confirmation_of :password
+  validates_format_of :username, :as => :email_address
   
   def password
     @password ||= Password.new(encrypted_password)

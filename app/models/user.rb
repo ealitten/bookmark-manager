@@ -7,7 +7,7 @@ class User
   include BCrypt
 
   property :id, Serial
-  property :username, String
+  property :username, String, required: true
   property :encrypted_password, Text
   attr_accessor :password_confirmation
 
